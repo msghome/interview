@@ -28,28 +28,99 @@
 		    right: 0;
 		    bottom: 0;
 	    }
-	    
-	>如何垂直居中一个<img>?（
+	>如何垂直居中一个\<img>
 
 		#container{     //<img>的容器设置如下
 		    display:table-cell;
 		    text-align:center;
 		    vertical-align:middle;
 		}
-2. 左右布局，左列定宽，右列自适应?
-3. 浏览器兼容性问题？
-	>针对不同的浏览器添加相应的前缀，比如-webkit-、 -o-、-moz-。
+	>Flex布局
 	
-	>对于 IE 的低版本，可以编写带有特定前缀的代码
-		>使用 CSS reset:对于有些 HTML 标签，浏览器默认的 margin 和 padding 不同， 可以使用 CSS 代码改写默认的样式效果，从而实现统一;
-		>IE 低版本中，不能使用 auto 关键字实现块级元素居中显示，可以改用设置父元 素的 text-align;
-		>子元素设置上外边距时，父元素需要设置边框或者外边距; 4、外边距合并问题。
+		#div1{
+			display:flex;
+			align-items:center;
+			justify-content:center;
+		}
+	
+2. 左右布局，左列定宽，右列自适应?
+	>绝对定位
+	
+		.side{   
+		    position:absolute;left:0;top:0;   
+		    width:200px;   
+		    height:200px;     
+		}   
+		.main{   
+		    margin-left:210px;     
+		    height:200px;   
+		} 
+	>浮动定位
+
+		.side{   
+		    width:200px;   
+		    height:200px;   
+		    float:left;     
+		}   
+		.main{   
+		    height:200px;   
+		    margin-left:210px;     
+		} 
+	>Flex布局
+
+	    .parent{     
+	        display:flex;   
+	    }    
+	    .side{   
+	        width:200px;   
+	        height:200px;     
+	    }   
+	    .main{   
+	        height:200px;   
+	        flex:1;   
+	    }​
+	>利用BFC不与浮动元素重叠的特性
+
+		.side {   
+		  width: 200px;   
+		  height: 100px;   
+		  float: left;    
+		}   
+		.main {   
+		  /* 创建BFC   */  
+		  overflow: hidden;     
+		  height: 100px;   
+		}
 3. CSS3 的新特性?
 
 	>选择器、盒子模型、列表模块、背景、边框、复杂选 择器、文字阴影、边框圆角、边框阴影、渐变、过渡、多栏布局、2D/3D 转换、动画
 3. px,em,rem的区别?
 
 	>px,em,rem都是长度单位，区别是，px的值是固定的，指定是多少就是多少，计算比较容易。em得值不是固定的，并且em会继承父级元素的字体大小。rem相对html的字体。
+	
+3. 溢出省略
+
+	>单行溢出省略
+	
+		p{
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+	>两行溢出省略
+	
+		p{
+			overflow : hidden;
+  			text-overflow: ellipsis;
+  			display: -webkit-box;
+  			-webkit-line-clamp: 2;
+  			-webkit-box-orient: vertical;
+		}
+				      
+4. line-height:150%与line-height:1.5的真正区别
+
+	>有单位时，子元素继承了父元素根据父元素的字体大小计算得出的行距；无单位时继承了系数，子元素会根据子元素的字体大小计算各自行距（推荐使用）
+	
 3. CSS中可以通过哪些属性定义，使得一个DOM元素不显示在浏览器可视范围内？
 	>设置display属性为none，或者设置visibility属性为hidden.
 	
@@ -121,12 +192,18 @@
 
 3. 网页制作会用到的图片格式有哪些？
 	>png-8，png-24，jpeg，gif，svg，Webp
+4. Web Worker
+5. webSockit
+6. 拖拽
+7. 文件上传
+
 	
 ##JavaScript
 1. 面向对象的特征？
 
 	#####封装
-		
+	>把相关的信息（数据或方法）存储在对象中，js当中只能依靠变量的作用域来实现封装的特性,封装实现就是是对象内部的变化对外界是透明的,不可见。这种做法使对象之间低耦合,便于维护升级,团队协作开发。
+	
 	#####继承
 	>每个函数中都有一个 prototype 属性，该属性所存储的就是原型对象。原型对象用来保存共享属性和方法，可以通过原型来实现为对象扩展属性，实现继承。
 	
@@ -149,7 +226,99 @@
 				B.prototype = A.prototype;
 				var b2 = new B();
 	#####多态
+	>能以多种不同的形式运行函数和方法,js是动态语言,多态性本身就有。
+2. ajax原理
+
+	>Ajax的原理简单来说通过XmlHttpRequest对象来向服务器发异步请求，从服务器获得数据，然后用javascript来操作DOM而更新页面。这其中最关键的一步就是从服务器获得请求数据。要清楚这个过程和原理，我们必须对 XMLHttpRequest有所了解。
 	
+	>XMLHttpRequest是ajax的核心机制，它是在IE5中首先引入的，是一种支持异步请求的技术。简单的说，也就是javascript可以及时向服务器提出请求和处理响应，而不阻塞用户,达到无刷新的效果。
+
+	>它的属性有：
+	
+		onreadystatechange  每次状态改变所触发事件的事件处理程序。
+		responseText     从服务器进程返回数据的字符串形式。
+		responseXML    从服务器进程返回的DOM兼容的文档数据对象。
+		status           从服务器返回的数字代码
+		status Text       伴随状态码的字符串信息
+		readyState       对象状态值
+		　　0 (未初始化) 对象已建立，但是尚未初始化（尚未调用open方法）
+		　　1 (初始化) 对象已建立，尚未调用send方法
+		　　2 (发送数据) send方法已调用，但是当前的状态及http头未知
+		　　3 (数据传送中) 已接收部分数据，因为响应及http头不全，这时通过responseBody和responseText获取部分数据会出现错误，
+		　　4 (完成) 数据接收完毕,此时可以通过通过responseXml和responseText获取完整的回应数据
+		　　
+3. 解决跨域问题
+
+	>由于同源策略，即域名，协议，端口必须相同，当浏览器运行一个JS脚本时会进行同源检测，如果不同源是不能执行的。
+	* （1）document.domain + iframe
+	* （2）动态创建script
+	* （3）window.name + iframe
+	* （4）window.postMessage
+	* （5）CORS
+	* （6）JSONP
+	* （7）nginx代理
+4. 事件委托原理
+
+	>利用‘事件冒泡’原理，把事件绑定在父级元素,触发执行效果。
+	
+	>取消‘事件冒泡’
+	
+		var stopEvent = function(event){ 
+			e = event || window.event; 
+			if(e.stopPropagation){ 
+				e.stopPropagation(); 
+			}else { 
+				e.cancelBubble = true; 
+			} 
+		};
+5. 数据类型转换常用方法
+
+	* 数组->字符串
+
+		>[1,2,3].join("");
+		
+		>[1,2,3].toString();等同于[1,2,3].join();
+		
+		>[1,2,3]+"";
+		
+		>String([1,2,3]);
+	* 字符串->数组
+
+		>"11111".split("");
+	* 字符串->数字
+
+		>parseInt("123zhang");
+		
+		>parseFloat("0.55zhang");
+		
+		>'5' - '2' // 3
+		
+		>'5' * '2' // 10
+		
+		>+true // 1
+		
+		>-false // 0
+		
+		>Number("678");
+		
+		上面代码等同于
+		
+			if (typeof "678".valueOf() === 'object'){
+			    Number("678".toString());
+			} else {
+			    Number("678".valueOf());
+			}
+	* 字符串->JSON对象
+	
+		>JSON.parse(jsonstr);
+		
+		>eval('(' + jsonstr + ')');
+		
+		>$.parseJSON( jsonstr );
+	* JSON对象->字符串
+
+		>JSON.stringify(jsonobj); 
+		
 2. 如何添加html元素的事件,有几种方法?
 
 	* (1)直接在html中定义元素的事件相关属性（违反了内容与行为相分离原则，不推荐使用）
@@ -164,9 +333,18 @@
 		
 				btn.addEventListener('click', function( ){ });
 			
-3. 指出{}+[]与[]+{}的值,为什么？
-
+3. 指出{}+[],[]+{},+ {a: 1},的值,为什么？
+	>0 , "[object Object]" , NaN
+	
+	>前者相当于 {}; +[],中间分别调用了[]和{}的toString()方法
+	
+	>console.log({}+[]) 输出：[object Object], js把()中的语句当做一个表达式，因此{}不能被理解为语句块
+	
 4. form中的input可以设置为readonly（只读）和disable（禁用），请问2者有什么区别？
+
+	>disabled: 不会被发送到 server 端
+	
+	>readonly: 会被发送到 server 端
 5. Number( )和parseInt( )的区别	* 都是全局对象	* Number()：被转换字符串不能包含任何一个非数字字符，否则显示结果为NaN，包括整数和小数 	* parseInt() ：只有字符串的开头不能是非数字字符，没有小数
 6. 简要描述你对闭包的理解
 
@@ -180,7 +358,65 @@
 	>call()和 apply()都用于间接调用函数。
 		>call 方法用于调用一个对象的一个方法，并以另一个对象替换当前对象。即，任何函数可以作为任何对象的方法来调用，哪怕这个函数并非那个对象的方法。第一个参数 要调用函数的上下文，即将被用作当前对象的对象。其他参数为可选参数，表示将被传递方法参数序列。
 		>apply()和 call()在作用上是相同的，但两者在参数上有区别的。它俩的第一个参数相同，不同的是第二个参数。对于 apply()，第二个参数是一个参数数组，也就是将多个参数组合 成为一个数组传入。如:
-			func.call(func1,var1,var2,var3)		func.apply(func1,[var1,var2,var3]) 
+			func.call(func1,var1,var2,var3)		func.apply(func1,[var1,var2,var3])8. 浏览器存储有哪些？
+
+	#####Cookie：
+	>优点：兼容性好，
+	
+	>缺点：操作繁琐，只能存简单的数据，还会过期，站点设置httponly的话，JS就无法操作Cookie了，在请求头上带着数据，大小是4k之内。
+	
+	#####WebStorage：
+	包含localStorage和sessionStorage两种，localStorage和sessionStorage都继承自Storage对象，每个域名5M
+	
+	>优点：使用简单方便，
+	
+	>缺点：IE有些版本不支持，不能存复杂的对象，必须先转化成JSON字符串，没有索引搜索效率不高，只能同步读写操作，当写入的数据比较大时可能造成JS引擎堵塞。
+
+	#####IndexedDB：
+	IndexedDB是一种基于Javascript对象继承的数据库，它支持事务，同时支持异步和同步读写。IndexedDB中可以存入对象，当然对象要能够结构化克隆(structured clone)，同时它还提供索引功能，极大地提高了搜索的效率。通常来说IndexedDB的大小是没有限制，当大小超过50MB的时候，浏览器会弹出对话框来询问用户是否增加数据的大小。
+
+	>优点：支持事务，支持索引，可以存入对象，效率也不错。
+	
+	>缺点：使用有些麻烦，上手需要一定时间。
+
+	#####application cache
+	本地缓存应用所需的文件
+	>优点：① 离线浏览 ② 提升页面载入速度 ③ 降低服务器压力
+	
+	>缺点：某些浏览器设置的限制是每个站点 5MB，引用manifest的html必须与manifest文件同源，在同一个域下
+	
+	使用方法：
+	①配置manifest文件，文件是简单的文本文件，它告知浏览器被缓存的内容（以及不缓存的内容）
+
+	完整demo：
+
+		CACHE MANIFEST   –在此标题下列出的文件将在首次下载后进行缓存
+		# 2016-07-24 v1.0.0
+		/theme.css
+		/main.js
+		NETWORK:  –在此标题下列出的文件需要与服务器的连接，且不会被缓存
+		login.jsp
+		FALLBACK:
+		/html/ /offline.html
+		CACHE MANIFEST
+		# 2016-07-24 v1.0.0
+		/theme.css
+		/main.js
+		NETWORK:
+		login.jsp
+		FALLBACK:  –在此标题下列出的文件规定当页面无法访问时的回退页面（比如 404 页面）
+		/html/ /offline.html
+		
+##AngularJS
+
+##脚手架工具
+1. grunt
+2. bower
+3. yoman
+4. gulp
+5. webpack
+
+
 ##性能优化
 1. 浏览器的内核
 	* IE: trident内核
@@ -197,3 +433,32 @@
 3. 前端开发的优化问题
 	
 	 * 减少http请求次数，	 * JS，CSS源码压缩	 * 少用全局变量	 * 缓存DOM节点查找的结果	 * 图片预载	 * 减少dom操作，请求数和质量
+4.  CSS vs. JS Animation
+
+	>CSS transition 的动画逻辑是由浏览器来执行，所以它的性能能够比 jQuery 动画好。它的优势体现在：
+  1. 通过优化 DOM 操作，避免内存消耗来减少卡顿
+  2. 使用与 RAF 类似的机制
+  3. 强制使用硬件加速 （通过 GPU 来提高动画性能）
+
+5. 浏览器兼容性问题？
+	>针对不同的浏览器添加相应的前缀，比如-webkit-、 -o-、-moz-。
+	
+	>对于 IE 的低版本，可以编写带有特定前缀的代码
+		>使用 CSS reset:对于有些 HTML 标签，浏览器默认的 margin 和 padding 不同， 可以使用 CSS 代码改写默认的样式效果，从而实现统一;
+		>IE 低版本中，不能使用 auto 关键字实现块级元素居中显示，可以改用设置父元 素的 text-align;
+		>子元素设置上外边距时，父元素需要设置边框或者外边距; 4、外边距合并问题。
+	
+	>IE8不支持IndexOf(),trim(),rgba(),getElementsByClassName(),background-size等
+	
+	>IE6、IE7不识别inline-block但可以触发块元素。直接设置display:inline，使用zoom:1触发layout。
+	
+	>消除图片底部间隙：
+	
+	    /* 图片块状化-无基线对齐 */
+	    img{diaplay:block;}
+	    /* 图片底线对齐 */
+	    img{vertical-align: button;}
+	    /* 行高足够小-基线位置上移 */
+	    .box{line-height: 0;}
+	
+	
