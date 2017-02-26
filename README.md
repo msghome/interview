@@ -93,10 +93,50 @@
 		}
 3. CSS3 的新特性?
 
-	>选择器、盒子模型、列表模块、背景、边框、复杂选 择器、文字阴影、边框圆角、边框阴影、渐变、过渡、多栏布局、2D/3D 转换、动画
-3. px,em,rem的区别?
+	>选择器、盒子模型、背景、边框、复杂选择器、文字阴影、边框圆角、边框阴影、渐变、过渡、多栏布局、2D/3D 转换、动画
+	
+	>盒子模型
+	
+		box-sizing：content-box | border-box
+		
+	>边框
+	
+		border-image: border-image-source [border-image-width]{1,4} [border-image-repeat]{0,2}
+		border-radius：5px | 50%;
+		box-shadow：x y length extent inset;
 
-	>px,em,rem都是长度单位，区别是，px的值是固定的，指定是多少就是多少，计算比较容易。em得值不是固定的，并且em会继承父级元素的字体大小。rem相对html的字体。
+	>文字阴影
+	
+		text-shadow：x y length color;
+	>渐变
+		
+		background: linear-gradient(direction, color-stop1, color-stop2, ...);
+		background: linear-gradient(angle, color-stop1, color-stop2);
+		background: radial-gradient(center, shape size, start-color, ..., last-color);
+	>多栏布局
+	
+		.three-column {
+			-webkit-column-count: 3;
+			-moz-column-count: 3;
+			column-count: 3;
+			-webkit-column-gap: 1em;    
+			-moz-column-gap: 1em;
+			column-gap: 1em;
+  		}
+	>过渡
+  		
+  		transition：[ transition-property ] || [ transition-duration ] || [ transition-timing-function ] || [ transition-delay ]
+	>转换 
+	
+ 		transform：none | matrix(<number>,<number>,<number>,<number>,<number>,<number>)? translate(<length>[,<length>])? translateX(<length>)? translateY(<length>)? rotate(<angle>)? scale(<number>[,<number>])? scaleX(<number>)? scaleY(<number>)? skew(<angle>[,<angle>])? skewX(<angle>) || skewY(<angle>)?
+ 		
+	>动画
+  	
+  		animation：[[ animation-name ] || [ animation-duration ] || [ animation-timing-function ] || [ animation-delay ] || [ animation-iteration-count ] || [ animation-direction ]] [ , [ animation-name ] || [ animation-duration ] || [ animation-timing-function ] || [ animation-delay ] || [ animation-iteration-count ] || [ animation-direction ]]*
+  		
+3. pt,px,em,rem的区别?
+
+	>pt,px,em,rem都是长度单位，区别是，pt为点（Point），绝对长度单位。px是像素，显示器屏幕分辨率而言。em得值不是固定的，并且em会继承父级元素的字体大小,并相对于当前对象内文本的字体尺寸。rem相对于根元素(即html元素)font-size计算值的倍数。
 	
 3. 溢出省略
 
@@ -193,10 +233,114 @@
 3. 网页制作会用到的图片格式有哪些？
 	>png-8，png-24，jpeg，gif，svg，Webp
 4. Web Worker
-5. webSockit
-6. 拖拽
+
+	>web worker 是运行在后台的 JavaScript，独立于其他脚本，不会影响页面的性能。您可以继续做任何愿意做的事情：点击、选取内容等等，而此时 web worker 在后台运行。
+	
+	用法：
+	>postMessage() 方法 - 它用于向 HTML 页面传回一段消息
+	
+	>"onmessage" 事件监听器
+	
+	>terminate() 终止 Web Worker
+	
+	限制：
+	>Web Worker无法访问DOM节点；
+	
+	>Web Worker无法访问全局变量或是全局函数；
+	
+	>Web Worker无法调用alert()或者confirm之类的函数；
+	
+	>Web Worker无法访问window、document之类的浏览器全局变量；
+	
+5. 拖拽
+	
+	>draggable 属性：就是标签元素要设置draggable=true，否则不会有效果，例如：
+	
+		<div title="拖拽我" draggable="true">列表1</div>
+	>DataTransfer 对象：退拽对象用来传递的媒介，使用一般为Event.dataTransfer。
+
+	>ondragstart 事件：当拖拽元素开始被拖拽的时候触发的事件，此事件作用在被拖曳元素上
+
+	>ondragenter 事件：当拖曳元素进入目标元素的时候触发的事件，此事件作用在目标元素上
+
+	>ondragover 事件：拖拽元素在目标元素上移动的时候触发的事件，此事件作用在目标元素上
+
+	>ondrop 事件：被拖拽的元素在目标元素上同时鼠标放开触发的事件，此事件作用在目标元素上
+
+	>ondragend 事件：当拖拽完成后触发的事件，此事件作用在被拖曳元素上
+
+	>Event.preventDefault() 方法：阻止默认的些事件方法等执行。在ondragover中一定要执行preventDefault()，否则ondrop事件不会被触发。另外，如果是从其他应用软件或是文件中拖东西进来，尤其是图片的时候，默认的动作是显示这个图片或是相关信息，并不是真的执行drop。此时需要用用document的ondragover事件把它直接干掉。
+
+	>Event.effectAllowed 属性：就是拖拽的效果。
+	
 7. 文件上传
 
+	* 隐藏的iframe模拟异步上传
+	
+	>优点：浏览器原生支持，不需要插件，广泛的浏览器兼容性
+	
+	>缺点：交互差，体验差，上传过程基本不可控，性能差
+	
+	>1. form元素新增target属性，其值指向页面内隐藏的一个\<iframe>元素的id, 如下示意：
+	
+			<form action="" method="post" enctype="multipart/form-data" target="uploadIframe">
+				<input type="submit"/>
+			</form>
+			<iframe id="uploadIframe"></iframe>  
+	>2. 处理\<iframe>元素的onload事件，获得返回内容（如下代码示意）
+	
+			var doc = iframe.contentDocument ? iframe.contentDocument : frames[iframe.id].document;
+			var response = doc.body && doc.body.innerHTML;
+			
+	* 使用xhr level 2 纯ajax异步上传
+	
+	>优点：支持H5的浏览器原生支持，不需要插件，交互性较好,可以异步上传一个二进制文件
+
+	>缺点：受浏览器支持限制,兼容：比如Chrome 7+、Firefox 4+、IE 10+、Opera 12+、Safari 5+。
+
+	>原理：把所有表单元素的name与value组成一个queryString（查询字符串）,提交到后台
+用法：
+
+	>html 
+	
+		<form action="" 
+			enctype="multipart/form-data" 
+			method="post" 
+			name="fileinfo">
+		</form>
+		
+	>demo1:
+	
+		document.querySelector("#formData").addEventListener("submit", function(event) {
+		    var myFormData = new FormData(this); ;//获取文件法一
+		    //myFormData.append( "file" , $("#file")[0].files[0] ); //获取文件法二,append方法逐个添加键值对
+		    var xhr = new XMLHttpRequest();
+		    xhr.open(this.method, this.action);
+		    //xhr.responseType = "blob";
+		    //xhr.setRequestHeader("X-Requested-With",  "XMLHttpRequest");
+		    xhr.onload = function(e) {
+		        if (xhr.status == 200 && xhr.responseText) {
+		            // 显示：'欢迎你，' + xhr.responseText;
+		            this.reset();
+		        }
+		    }.bind(this);
+		    // 发送FormData对象数据
+		    xhr.send(myFormData);
+		    // 阻止默认的表单提交
+		    event.preventDefault();
+		}, false);
+		
+	* 文件分割上传
+	
+	> 浏览器记住（如localStorage）最近一次成功传输的位置；当再次上传这个图片的时候，直接从浏览器存储的位置开始传。
+	
+	> 浏览器不做任何事情，在上传之前先去后台走一遍，看看目前此文件是否存在，以及存在的大小，返回给浏览器，然后浏览器再决定上传的起始位置。
+		
+	* 第三方控件（Flash，ActiveX，浏览器插件）
+		
+	>优点：交互可控性好（多文件、进展显示、续传、暂停），性能好（可使用底层协议通信）
+		
+	>缺点：需要浏览器安装插件
 	
 ##JavaScript
 1. 面向对象的特征？
@@ -207,24 +351,24 @@
 	#####继承
 	>每个函数中都有一个 prototype 属性，该属性所存储的就是原型对象。原型对象用来保存共享属性和方法，可以通过原型来实现为对象扩展属性，实现继承。
 	
-			1、单独修改一个对象的原型，而不影响其他对象的原型
-				var b1 = new B();
-				Object.setPrototypeOf(b1, new A());
+		1、单独修改一个对象的原型，而不影响其他对象的原型
+			var b1 = new B();
+			Object.setPrototypeOf(b1, new A());
 
-			2、修改多个对象的原型
-			方式一：修改构造函数，这将影响使用该构造函数创建的所有对象
-				function B() {
-					Object.setPrototypeOf(this, new A());
-				 }
-			方式二：修改构造函数的原型，为该构造函数创建的对象指定统一的父级对象
-				var b1 = new B();
-				B.prototype = new A();
-				var b2 = new B();
-			方式三：只继承于原型(尽可能地将可重用的属性和方法添加到原型中)
-				var b1 = new B();
-				A.prototype.name = "mary";
-				B.prototype = A.prototype;
-				var b2 = new B();
+		2、修改多个对象的原型
+		方式一：修改构造函数，这将影响使用该构造函数创建的所有对象
+			function B() {
+				Object.setPrototypeOf(this, new A());
+			 }
+		方式二：修改构造函数的原型，为该构造函数创建的对象指定统一的父级对象
+			var b1 = new B();
+			B.prototype = new A();
+			var b2 = new B();
+		方式三：只继承于原型(尽可能地将可重用的属性和方法添加到原型中)
+			var b1 = new B();
+			A.prototype.name = "mary";
+			B.prototype = A.prototype;
+			var b2 = new B();
 	#####多态
 	>能以多种不同的形式运行函数和方法,js是动态语言,多态性本身就有。
 2. ajax原理
@@ -258,11 +402,11 @@
 	* （6）JSONP
 	* （7）nginx代理
 4. 事件委托原理
-
+	
 	>利用‘事件冒泡’原理，把事件绑定在父级元素,触发执行效果。
-	
-	>取消‘事件冒泡’
-	
+		
+	取消‘事件冒泡’
+		
 		var stopEvent = function(event){ 
 			e = event || window.event; 
 			if(e.stopPropagation){ 
@@ -272,9 +416,9 @@
 			} 
 		};
 5. 数据类型转换常用方法
-
+	
 	* 数组->字符串
-
+	
 		>[1,2,3].join("");
 		
 		>[1,2,3].toString();等同于[1,2,3].join();
@@ -283,10 +427,10 @@
 		
 		>String([1,2,3]);
 	* 字符串->数组
-
+	
 		>"11111".split("");
 	* 字符串->数字
-
+	
 		>parseInt("123zhang");
 		
 		>parseFloat("0.55zhang");
@@ -301,7 +445,7 @@
 		
 		>Number("678");
 		
-		上面代码等同于
+		>上面代码等同于
 		
 			if (typeof "678".valueOf() === 'object'){
 			    Number("678".toString());
@@ -309,27 +453,27 @@
 			    Number("678".valueOf());
 			}
 	* 字符串->JSON对象
-	
+		
 		>JSON.parse(jsonstr);
 		
 		>eval('(' + jsonstr + ')');
 		
 		>$.parseJSON( jsonstr );
 	* JSON对象->字符串
-
+	
 		>JSON.stringify(jsonobj); 
 		
 2. 如何添加html元素的事件,有几种方法?
 
-	* (1)直接在html中定义元素的事件相关属性（违反了内容与行为相分离原则，不推荐使用）
+	* 直接在html中定义元素的事件相关属性（违反了内容与行为相分离原则，不推荐使用）
 					
 			<input type=”button” onclick=”funcA();” />
-	* （2）在JavaScript中为元素的事件相关属性赋值
+	* 在JavaScript中为元素的事件相关属性赋值
 	
 			btn.onclick = funcA;
 			或者
 			btn.onclick = function(){};
-	+ （3）高级事件处理方式，一个事件可以绑定多个监听函数		- IE：attachEvent		- DOM:addEventListener
+	+ 高级事件处理方式，一个事件可以绑定多个监听函数		- IE：attachEvent		- DOM:addEventListener
 		
 				btn.addEventListener('click', function( ){ });
 			
@@ -409,12 +553,11 @@
 		
 ##AngularJS
 
-##脚手架工具
-1. grunt
-2. bower
-3. yoman
-4. gulp
-5. webpack
+
+##文件管理
+1. 版本管理（SVN、git）
+3. 模块化（AMD／CMD）
+4. 工程化（grunt、gulp、webpack、bower、yeoman）
 
 
 ##性能优化
@@ -431,18 +574,60 @@
 	* 节约主域名的连接数，优化页面响应速度
 	* 防止不必要的安全问题
 3. 前端开发的优化问题
+			*  少用全局变量	*  缓存DOM节点查找的结果
+	*  尽量减少HTTP请求次数 
+	* 	减少DNS查找次数
+	* 	避免跳转 
+	* 	可缓存的AJAX 
+	* 	推迟加载内容 
+	* 	预加载 
+	* 	减少DOM元素数量 
+	* 	根据域名划分页面内容 
+	* 	使iframe的数量最小 
+	* 	不要出现404错误 
+	* 	使用内容分发网络 
+	* 	为文件头指定Expires或Cache-Control 
+	* 	Gzip压缩文件内容 
+	* 	配置ETag 
+	* 	尽早刷新输出缓冲 
+	* 	使用GET来完成AJAX请求 
+	* 	把样式表置于顶部
+	* 	避免使用CSS表达式（Expression） 
+	* 	使用外部JavaScript和CSS 
+	* 	削减JavaScript和CSS 
+	* 	用<link>代替@import 
+	* 	避免使用滤镜 
+	* 	把脚本置于页面底部 
+	* 	剔除重复脚本 
+	* 	减少DOM访问 
+	* 	开发智能事件处理程序 
+	* 	减小Cookie体积 
+	* 	对于页面内容使用无coockie域名 
+	* 	优化图像 
+	* 	优化CSS Spirite 
+	* 	不要在HTML中缩放图像 
+	* 	favicon.ico要小而且可缓存 
+	* 	保持单个内容小于25K 
+	* 	打包组件成复合文本 
 	
-	 * 减少http请求次数，	 * JS，CSS源码压缩	 * 少用全局变量	 * 缓存DOM节点查找的结果	 * 图片预载	 * 减少dom操作，请求数和质量
 4.  CSS vs. JS Animation
 
 	>CSS transition 的动画逻辑是由浏览器来执行，所以它的性能能够比 jQuery 动画好。它的优势体现在：
-  1. 通过优化 DOM 操作，避免内存消耗来减少卡顿
-  2. 使用与 RAF 类似的机制
-  3. 强制使用硬件加速 （通过 GPU 来提高动画性能）
+  * 通过优化 DOM 操作，避免内存消耗来减少卡顿
+  * 使用与 RAF 类似的机制
+  * 强制使用硬件加速 （通过 GPU 来提高动画性能）
 
 5. 浏览器兼容性问题？
 	>针对不同的浏览器添加相应的前缀，比如-webkit-、 -o-、-moz-。
 	
+	|内核类型					| 写法
+	|----						| ----
+	|Webkit(Chrome/Safari)	|-webkit-transition
+	|Gecko(Firefox)			|-moz-transition
+	|Presto(Opera)			|-o-transition
+	|Trident(IE)				|-ms-transition
+	|W3C						|transition
+		
 	>对于 IE 的低版本，可以编写带有特定前缀的代码
 		>使用 CSS reset:对于有些 HTML 标签，浏览器默认的 margin 和 padding 不同， 可以使用 CSS 代码改写默认的样式效果，从而实现统一;
 		>IE 低版本中，不能使用 auto 关键字实现块级元素居中显示，可以改用设置父元 素的 text-align;
@@ -459,6 +644,6 @@
 	    /* 图片底线对齐 */
 	    img{vertical-align: button;}
 	    /* 行高足够小-基线位置上移 */
-	    .box{line-height: 0;}
+	    .box{line-height: 0;font-size:0;}
 	
 	
