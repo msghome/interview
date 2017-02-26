@@ -1,6 +1,14 @@
 #面试题
+>目录
+>
+* [CSS](#css)
+* [HTML5](#html)
+* [JavaScript](#javascript)
+* [AngularJS](#ng)
+* [文件管理](#es)
+* [性能优化](#optimize)
 
-##CSS
+##<span id="css">CSS</span>
 1. 如何垂直居中一个浮动元素？
 	>方法一：已知元素的高宽
 	
@@ -208,7 +216,7 @@
 			counter-increment:chapter;
 		}
 	
-##HTML5
+##<span id="html">HTML5</span>
 1. 请描述一下cookies，sessionStorage和localStorage的区别？
 	>sessionStorage用于本地存储一个会话（session）中的数据，这些数据只有在同一个会话中的页面才能访问并且当会话结束后数据也 随之销毁。因此sessionStorage不是一种持久化的本地存储，仅仅是会话级别的存储。而localStorage用于持久化的本地存储，除非主动删除数据，否则数据是永远不会过期的。
 
@@ -342,7 +350,7 @@
 		
 	>缺点：需要浏览器安装插件
 	
-##JavaScript
+##<span id="javascript">JavaScript</span>
 1. 面向对象的特征？
 
 	#####封装
@@ -551,16 +559,17 @@
 		FALLBACK:  –在此标题下列出的文件规定当页面无法访问时的回退页面（比如 404 页面）
 		/html/ /offline.html
 		
-##AngularJS
+##<span id="ng">AngularJS</span>
 
 
-##文件管理
+##<span id="es">文件管理</span>
+
 1. 版本管理（SVN、git）
 3. 模块化（AMD／CMD）
 4. 工程化（grunt、gulp、webpack、bower、yeoman）
 
 
-##性能优化
+##<span id="optimize">性能优化</span>
 1. 浏览器的内核
 	* IE: trident内核
 	* Firefox：gecko内核
