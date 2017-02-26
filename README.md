@@ -2,11 +2,11 @@
 >目录
 >
 * [CSS](#css)
-* [HTML5](#html)
+* [HTML5](#html5)
 * [JavaScript](#javascript)
-* [AngularJS](#ng)
-* [文件管理](#es)
-* [性能优化](#optimize)
+* [AngularJS](#angularjs)
+* [文件管理](#文件管理)
+* [性能优化](#性能优化)
 
 ##<span id="css">CSS</span>
 1. 如何垂直居中一个浮动元素？
