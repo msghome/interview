@@ -354,7 +354,22 @@
 1. 面向对象的特征？
 
 	#####封装
-	>把相关的信息（数据或方法）存储在对象中，js当中只能依靠变量的作用域来实现封装的特性,封装实现就是是对象内部的变化对外界是透明的,不可见。这种做法使对象之间低耦合,便于维护升级,团队协作开发。
+	>把相关的信息（数据或方法）存储在对象中，js当中只能依靠变量的作用域来实现封装的特性,封装实现就是是对象内部的变化对外界是透明的,不可见。这种做法使对象之间低耦合,便于维护升级,团队协作开发。除了隐藏数据，还包括隐藏实现细节、设计细节以及隐藏对象的类型等。
+
+(页码42). 
+	
+		//封装数据
+		var myObject = (function(){ 
+			var __name = 'sven'; // 私有（private）变量 
+			return { 
+				getName: function(){ // 公开（public）方法 
+					return __name; 
+				} 
+			} 
+		})(); 
+		console.log( myObject.getName() ); // 输出：sven
+		console.log( myObject.__name ) // 输出：undefined
+		//
 	
 	#####继承
 	>每个函数中都有一个 prototype 属性，该属性所存储的就是原型对象。原型对象用来保存共享属性和方法，可以通过原型来实现为对象扩展属性，实现继承。
@@ -378,7 +393,42 @@
 			B.prototype = A.prototype;
 			var b2 = new B();
 	#####多态
-	>能以多种不同的形式运行函数和方法,js是动态语言,多态性本身就有。
+	>多态的实际含义是：同一操作作用于不同的对象上面，可以产生不同的解释和不同的执行结果。换句话说，给不同的对象发送同一个消息的时候，这些对象会根据这个消息分 别给出不同的反馈。
+	
+	>多态最根本的作用就是通过把过程化的条件分支语句转化为对象的多态性， 从而消除这些条件分支语句。
+
+(页码37). 
+		
+		var makeSound = function( animal ){ 
+			if ( animal instanceof Duck ){ 
+			console.log( '嘎嘎嘎' ); 
+			}else if ( animal instanceof Chicken ){ 
+				console.log( '咯咯咯' ); 
+			} 
+		}; 
+		var Duck = function(){}; 
+		var Chicken = function(){}; 
+		makeSound( new Duck() ); // 嘎嘎嘎 
+		makeSound( new Chicken() ); // 咯咯咯
+		
+							开放-封闭原则 解耦代码
+		---------------------------------------------------------
+		
+		var makeSound = function( animal ){ 
+			animal.sound(); 
+		};
+		var Duck = function(){} 
+		Duck.prototype.sound = function(){ 
+			console.log( '嘎嘎嘎' ); 
+		}; 
+		var Chicken = function(){} 
+		Chicken.prototype.sound = function(){ 
+			console.log( '咯咯咯' ); 
+		}; 
+		makeSound( new Duck() ); // 嘎嘎嘎 
+		makeSound( new Chicken() ); // 咯咯咯
+
+
 2. ajax原理
 
 	>Ajax的原理简单来说通过XmlHttpRequest对象来向服务器发异步请求，从服务器获得数据，然后用javascript来操作DOM而更新页面。这其中最关键的一步就是从服务器获得请求数据。要清楚这个过程和原理，我们必须对 XMLHttpRequest有所了解。
